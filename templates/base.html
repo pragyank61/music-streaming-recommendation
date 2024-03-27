@@ -1,0 +1,153 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="google-site-verification"
+      content="jfk7kB7nVZyaGC-jAzqr-OmOKUtUWWvpNwUzSJS-cKU"
+    />
+    <link rel="icon" type="image/png" href="/media/favicon.png" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>{% block title %} {% endblock title %}</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
+    <link
+      href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto+Mono&display=swap" rel="stylesheet"> -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- <link href="{% static '../static/musicapp/css/musicplayer.css' %}" rel="stylesheet"> -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'musicapp/css/musicplayer.css' %}"
+    />
+
+    {% block header %} {% endblock header %}
+  </head>
+  <body>
+    
+    <nav class="navbar navbar-expand-md">
+      <div class="container container-fluid">
+        
+        <h1>
+          <a href="{% url 'index' %}" class="navbar-brand project-title">
+            <strong>music stream</strong></a
+          >
+        </h1>
+        <div class="collapse navbar-collapse dash-items">
+          <a href="{% url 'index' %}" class="btn mt-2 mx-1">Dashboard</a>
+          <a href="{% url 'all_songs' %}" class="btn mt-2 mx-1">All songs</a>
+          {% if request.user.is_active %}
+
+          <div class="btn-group mt-2 mx-1">
+            <a type="button" href="{% url 'mymusic' %}" class="btn"
+              >Libraries</a
+            >
+            <a
+              type="button"
+              href="{% url 'generate_recommendations' %}"
+              class="btn"
+              >Recommendations</a
+            >
+
+            <!-- <button
+              type="button"
+              class="btn dropdown-toggle dropdown-toggle-split"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="{% url 'playlist' %}">Playlists</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'favourite' %}"
+                >Favourite Songs</a
+              >
+            </div> -->
+          </div>
+
+          {% endif %}
+        </div>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbar">
+          {% if request.user.is_active %}
+          <h5 class="btn hello-msg mt-4 mx-2">Hi, {{ request.user.username }}</h5>
+          <h5><a href="{% url 'logout' %}" class="btn sign-out-msg mt-4 mx-2"> Sign Out </a></h5>
+          {% else %}
+          <a href="{% url 'login' %}" class="btn sign-in-up-msg mt-2 mx-2"> Sign In </a>
+          <a href="{% url 'signup' %}" class="btn sign-in-up-msg mt-2 mx-2"> Sign Up </a>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+    <div class="thickline"></div>
+
+    {% block body %} {% endblock body %}
+
+    <div class="content">
+      <div class="lyrics"></div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <!-- jQuery first, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/smooth-scroll/16.1.3/smooth-scroll.min.js"
+      integrity="sha512-HYG9E+RmbXS7oy529Nk8byKFw5jqM3R1zzvoV2JnltsIGkK/AhZSzciYCNxDMOXEbYO9w6MJ6SpuYgm5PJPpeQ=="
+      crossorigin="anonymous"
+    ></script>
+    {% block js %} {% endblock js %}
+    
+  </body>
+</html>

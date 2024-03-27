@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load socialaccount %}
+{% block title %} Home {% endblock title %}
+
+{% block body %} 
+
+<br>
+<div class="container">
+  <div class="col-md-13">
+    <form id="searchform" class="form-horizontal" role="search" method="get" action=''>
+          <div class="form-group">
+              <div class="input-group">
+                  <input type="text" class="form-control input-lg " name="q" style="border-radius: 5px;"
+                  value="{{ request.GET.q }}" placeholder= "Search Songs "/>
+                                
+                  <span class='input-group-btn mx-2'>
+                    <button type="submit" style="border-radius: 5px;" class="btn search-btn">Search</button>
+                  </span>
+              </div>
+          </div>
+      </form>
+  </div>
+
+{% if query_search %}
+  <header class="section-heading">
+    <h5 class="section-title">SEARCH RESULTS</h5>
+  </header>
+<hr>
+{% endif %}
+<!-- Recent Song -->
+{% if recent_songs %}
+{% if not query_search %}
+  <header class="section-heading">
+    <h5 class="section-title mt-5"><a href="{% url 'recent' %}"> RECENTLY PLAYED</a></h5>
+  </header>
+<hr>
+{% endif %}
+<!-- Recent Song list -->
+<div class="all-song-cards">
+  <div class="row">
+    {% for song in recent_songs %}
+        <div class="col-md-2">
+            <div class="card mx-auto">
+              <img src="{{ song.song_img.url}}" class="img-responsive img-fluid card-img">
+              <div class="song-actions text-center"> <!-- Added text-center class -->
+                <a href="{% url 'play_song' song.id %}" class="song-title">{{ song.name }}</a>
+                <br>
+                <span class="artist-name">{{ song.singer }}</span>
+                <br>
+                <a href="{% url 'detail' song.id %}" class="view-song-info" data-song-id="{{ song.id }}">View Song Info</a>
+            </div>
+            </div>
+        </div>
+        {% endfor %}
+  </div>
+</div>
+
+{% endif %}
+
+<!-- All Songs -->
+{% if not query_search %}
+
+  <header class="section-heading">
+    <h5 class="section-title"><a href="{% url 'all_songs' %}"> ALL SONGS </a></h5>
+  </header>
+<hr>
+{% endif %}
+<!-- Song list -->
+<div class="all-song-cards">
+  <div class="row">
+    {% if all_songs %}
+    {% for song in all_songs %}
+        <div class="col-md-2">
+          <div class="card mx-auto">
+            <img src="{{ song.song_img.url}}" class="img-responsive img-fluid card-img">
+            <div class="song-actions text-center"> <!-- Added text-center class -->
+              <a href="{% url 'play_song' song.id %}" class="song-title">{{ song.name }}</a>
+              <br>
+              <span class="artist-name">{{ song.singer }}</span>
+              <br>
+              <a href="{% url 'detail' song.id %}" class="view-song-info" data-song-id="{{ song.id }}">View Song Info</a>
+          </div>
+          </div>
+        </div>
+    {% endfor %}
+    {% endif %}
+    {% if not query_search %}
+        
+    {% endif %}
+  </div>
+</div>
+
+
+
+
+<!-- English Songs -->
+{% if not query_search %}
+  <header class="section-heading">
+    <h5 class="section-title"></h5>
+  </header>
+<hr>
+{% endif %}
+<!-- Song list -->
+
+</div>
+
+
+<footer class="footer">
+  <div class="thickline"></div>
+    <div class="player">
+      <div class="left"><img src="{{last_played.song_img.url}}" height="90" width="90" style="border-radius: 10px 10px 10px 10px;"></div>
+      <div class="right">
+         <div class="top">
+            <a class="song" style="margin-left: 15px;color: white;">{{last_played.name}}</a>
+            <a class="artist" style="margin-left: 15px;color:white">{{last_played.album}}</a>
+         </div>
+         <div class="bottom">
+          {% if first_time %}
+            <audio controls=""  name="media" style="margin-left: 20px;margin-bottom: 10px;width: 100%;height:30px"><source src="{{last_played.song_file.url}}" type="audio/mpeg" ></audio>
+              {% else %}
+              <audio controls="" autoplay name="media" style="margin-left: 20px;margin-bottom: 10px;width: 100%;height:30px"><source src="{{last_played.song_file.url}}" type="audio/mpeg" ></audio>
+                {% endif %}
+          </div>
+      </div>
+    </div>
+</footer>
+
+{% endblock body %}

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load socialaccount %}
+{% block title %} Generate Recommendations {% endblock title %}
+{% block body %}
+
+<br>
+<div class="container">
+  <div class="row justify-content-center align-items-center">
+    <!-- Dropdown menu for selecting preferences -->
+  <div class="col-md-6">
+    <form class="form-horizontal" role="search" method="get" action=''>
+      <div class="form-group">
+        <div class="input-group">
+          <form  method="get">
+          <select class="form-control selectpicker ms-5 me-5" name="song" class="custom-select mx-1" style="border-radius: 5px;" data-live-search="true">
+            <!-- Add options for preferences -->
+            {% for music in music_list %} 
+            <option value="{{music}}" data-tokens="{{music}}">{{music}}</option>
+            {% endfor %} 
+            
+            <!-- Add more options as needed -->
+          </select>
+          <span class='input-group-btn'>              
+            <button type="submit" class="btn ms-5 me-5">Generate Recommendations</button>
+        </span>
+        </form>
+          
+        </div>
+      </div>
+    </form>
+  </div>
+  </div>
+</div>
+
+  <!-- Card spaces for recommendations -->
+  
+  <div class="container">
+    <div class="all-song-cards">
+      <header class="section-heading justify-content-center align-items-center">
+        <h5 class="section-title mt-4 mb-5">RECOMMENDED SONGS BASED ON SELECTED SONG:</h5>
+      </header>
+      <div class="row justify-content-center align-items-center">
+        
+        
+          {% for recommend in recommended %}
+          <div class="col-md-2">
+            <div class="card">
+              <img class="card-img-top reco-img" src="{{ recommend.recommended_music_poster }}" alt="{{ recommend.recommended_music_name }}"/>
+              <div class="card-body">
+                <h5 class="card-title reco-title">{{ recommend.recommended_music_name }}</h5>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+  
+        
+      </div>  
+    </div>
+  </div>
+</div>
+
+{% endblock body %}

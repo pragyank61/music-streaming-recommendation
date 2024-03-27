@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load socialaccount %}
+{% block title %} Generate Recommendations {% endblock title %}
+{% block body %}
+
+<br>
+<div class="container">
+  <!-- Dropdown menu for selecting preferences -->
+  <div class="col-md-6">
+    <form class="form-horizontal" role="search" method="get" action=''>
+      <div class="form-group">
+        <div class="input-group">
+          <select name="preferences" class="custom-select mx-1" style="border-radius: 5px;">
+            <option selected="selected" disabled>Select Preferences</option>
+            <!-- Add options for preferences -->
+            <option value="genre">Genre</option>
+            <option value="artist">Artist</option>
+            <!-- Add more options as needed -->
+          </select>
+          <span class='input-group-btn'>
+            <button type="submit" style="border-radius: 5px;" class="btn btn-primary">Generate</button>
+          </span>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Card spaces for recommendations -->
+  <div class="row">
+    {% for recommendation in recommendations %}
+    <div class="col-md-4">
+      <div class="card">
+        <img class="card-img-top" src="{{ recommendation.image_url }}" alt="{{ recommendation.title }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ recommendation.title }}</h5>
+          <p class="card-text">{{ recommendation.description }}</p>
+          <!-- Add button or link to view details of the recommendation -->
+          <a href="#" class="btn btn-primary">View Details</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock body %}
